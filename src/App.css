@@ -519,3 +519,39 @@ button, input, select, textarea,
   image-rendering: crisp-edges;
   -ms-interpolation-mode: nearest-neighbor;
 }
+/* HERO sahifa fon */
+body {
+  background: radial-gradient(120% 80% at 20% 10%, #17202a 0%, #0f1114 60%);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Yuqoridagi “The 36 Day” logotipi (the36-text.png) */
+img[src$="/the36-text.png"],
+img[src$="the36-text.png"] {
+  width: clamp(180px, 60vw, 560px);   /* mobil → desktop */
+  margin: clamp(16px, 6vw, 48px);
+  z-index: 2;
+  position: relative;
+}
+
+/* Pastdagi 3D “36” rasmi (36-3d.png) */
+img[src$="/36-3d.png"],
+img[src$="36-3d.png"] {
+  position: fixed;
+  right: max(-56px, -12vw);
+  bottom: max(-90px, -14vw);
+  width: clamp(220px, 55vw, 540px);
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 24px 40px rgba(0,0,0,.35));
+  z-index: 1;
+}
+
+/* Kichik ekranlarda joylashuvi */
+@media (max-width: 480px) {
+  img[src$="/36-3d.png"], img[src$="36-3d.png"] {
+    right: -12vw;
+    bottom: -14vw;
+  }
+}
