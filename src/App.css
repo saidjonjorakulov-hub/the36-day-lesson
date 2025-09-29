@@ -1,0 +1,521 @@
+/* src/App.css — CLEAN */
+
+:root {
+  --bg: #0f1216;
+  --card: #171b21;
+  --muted: #a7b0c0;
+  --ring: rgba(255,255,255,.12);
+  --white: #fff;
+  --blue: #38a6ff;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--white); font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; }
+
+.app{ height:100%; position:relative; }
+
+/* ===== SPLASH ===== */
+.splash{
+  position:fixed; inset:0; z-index:10;
+  display:block; overflow:hidden; isolation:isolate;
+  background: linear-gradient(#2d64e3,#0b3fa8);
+}
+.splash-headline{
+  position:absolute; left:64px; top:72px;
+  width:min(45vw,560px); height:auto;
+  filter:drop-shadow(0 10px 28px rgba(0,0,0,.22));
+  animation:slideIn .7s cubic-bezier(.2,.8,.2,1) .2s both;
+}
+.splash-num{
+  position:absolute; right:-8px; bottom:-8px;
+  width:min(56vw,900px); height:auto;
+  filter:drop-shadow(0 18px 48px rgba(0,0,0,.25));
+  animation:numIn .9s ease-out .3s both;
+}
+.spark{
+  position:absolute; right:220px; top:88px;
+  width:64px; height:64px; fill:#fff;
+  filter:drop-shadow(0 6px 18px rgba(255,255,255,.38));
+  animation:sparkle 1.05s ease .4s both;
+}
+
+/* ===== CONTENT WRAP ===== */
+.content{ opacity:0; transform:translateY(8px); min-height:100%; }
+.content.show{ animation:contentIn .45s ease .05s both; }
+.wrap { padding: 24px 22px; max-width: 980px; margin: 0 auto; }
+
+/* ===== CARDS / MINI UI ===== */
+.card { background: var(--card); border-radius: 16px; padding: 18px; box-shadow: 0 8px 30px rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.06); }
+.students { display: flex; gap: 22px; flex-wrap: wrap; }
+.student { display:flex; align-items:center; gap:10px; }
+.avatar {
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius: 50%;
+  border: 3px solid var(--ring);
+  overflow: hidden; background: #0e1218;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 4px 14px rgba(0,0,0,.35);
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.02); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideIn{
+  from{transform:translateY(40px); opacity:0; filter:blur(2px)}
+  to{transform:translateY(0); opacity:1; filter:blur(0)}
+}
+@keyframes numIn{
+  from{transform:translateY(36px) scale(.95); opacity:0}
+  to{transform:translateY(0) scale(1); opacity:1}
+}
+@keyframes sparkle{
+  0%{transform:scale(.7) rotate(0); opacity:0}
+  50%{transform:scale(1.2) rotate(10deg); opacity:1}
+  100%{transform:scale(1) rotate(0); opacity:.95}
+}
+@keyframes contentIn{
+  from{opacity:0; transform:translateY(8px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+/* ===== Responsive tweaks ===== */
+@media (max-width: 991px) {
+  .spark { right: 160px; top: 72px; width: 48px; height:48px; }
+  .splash-num { width:min(64vw,720px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash-headline, .splash-num, .spark, .content.show { animation: none !important; }
+}
+/* === Progress bar (Group sahifasi) ======================= */
+.progress {
+  position: relative;
+  height: 10px;
+  background: #0f1317;
+  border: 1px solid #1c2228;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress .bar {
+  height: 100%;
+  background: linear-gradient(90deg, #38a6ff, #8ab4ff);
+  box-shadow: 0 0 18px rgba(56,166,255,.35) inset;
+  transition: width .25s ease;
+}
+.progress .pct {
+  position: absolute;
+  top: -22px;
+  right: 0;
+  font-size: 12px;
+  color: #8ab4ff;
+  opacity: .95;
+}
+/* === Leaderboard: filters & medals ====================== */
+.filters { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; margin: 10px 0 14px; }
+.filters .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.seg { display:inline-flex; background:#0f1317; border:1px solid #1c2228; border-radius:12px; overflow:hidden; }
+.seg-btn { background:transparent; border:0; padding:8px 12px; color:#c9d1d9; cursor:pointer; }
+.seg-btn.active { background:#122231; color:#8ab4ff; }
+
+.lb { list-style:none; padding:0; margin:12px 0; display:grid; gap:10px; }
+.lb li{
+  display:grid; grid-template-columns: 32px 32px 1fr auto auto; gap:12px; align-items:center;
+  background:#0f1317; border:1px solid #1c2228; border-radius:12px; padding:10px 12px;
+}
+.lb .rank{ font-weight:800; opacity:.85; text-align:center; }
+.lb img{ border-radius:50%; }
+.lb .who .name{ display:flex; align-items:center; gap:8px; font-weight:700; }
+.lb .who .meta{ display:flex; gap:6px; flex-wrap:wrap; margin-top:2px; }
+.pill{ background:#111820; border:1px solid #22303a; border-radius:999px; padding:2px 8px; font-size:12px; }
+.pill-muted{ opacity:.8; }
+.lb .stat{ font-variant-numeric: tabular-nums; min-width: 80px; text-align:right; opacity:.95; }
+.lb .link{ text-decoration:none; color:#8ab4ff; font-weight:600; }
+
+/* Top-3 highlight */
+.lb li.first   { box-shadow: 0 0 0 1px rgba(255,215,0,.25) inset, 0 10px 30px rgba(0,0,0,.3); }
+.lb li.second  { box-shadow: 0 0 0 1px rgba(192,192,192,.25) inset, 0 10px 30px rgba(0,0,0,.3); }
+.lb li.third   { box-shadow: 0 0 0 1px rgba(205,127,50,.25) inset, 0 10px 30px rgba(0,0,0,.3); }
+.medal{ font-size:18px; line-height:1; }
+.medal.gold   { filter: drop-shadow(0 0 8px rgba(255,215,0,.35)); }
+.medal.silver { filter: drop-shadow(0 0 8px rgba(192,192,192,.35)); }
+.medal.bronze { filter: drop-shadow(0 0 8px rgba(205,127,50,.35)); }
+/* Parent view uchun vocab ro'yxati (read-only) */
+.vocab { list-style:none; padding:0; display:grid; gap:6px; margin-top:10px; }
+.vocab li{ display:grid; grid-template-columns: 1fr 1fr auto; gap:8px; align-items:center; background:#0f1317; border:1px solid #1c2228; border-radius:10px; padding:8px; }
+.vocab li.ok { outline:2px solid #0c4; }
+.vocab .w{ font-weight:600; }
+.vocab .m{ opacity:.9; }
+/* === Session button + pulse anim ======================== */
+.sessionBtn{
+  background:#0f2a16;
+  border:1px solid #1b3a23;
+  color:#86f2a8;
+  border-radius:10px;
+  padding:8px 10px;
+  cursor:pointer;
+}
+.sessionBtn:hover{ border-color:#24522f; }
+
+.trow.pulse{
+  animation: rowPulse .35s ease;
+}
+@keyframes rowPulse{
+  from{ box-shadow:0 0 0 0 rgba(134,242,168,.35) inset; }
+  to{   box-shadow:0 0 0 6px rgba(134,242,168,.0) inset; }
+}
+/* === QR layout (Parent view) ============================ */
+.qrRow { display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; }
+.qrBox {
+  background:#0f1317; border:1px solid #1c2228; border-radius:12px;
+  padding:10px; display:inline-flex; align-items:center; justify-content:center;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.qrSide { min-width: 220px; }
+/* === Vocab Quiz styles ================================== */
+.quiz { margin-top:12px; background:#0f1317; border:1px solid #1c2228; border-radius:12px; padding:12px; }
+.quiz-top { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+.quiz-q { font-weight:800; font-size:20px; margin:6px 0 12px; }
+.quiz-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:8px; }
+.quiz-opt { background:#111820; border:1px solid #22303a; border-radius:10px; padding:10px; cursor:pointer; text-align:left; }
+.quiz-opt:hover { border-color:#2a3a45; }
+.quiz-opt.ok { background:#0f2a16; border-color:#1b3a23; box-shadow:0 0 0 2px rgba(134,242,168,.18) inset; }
+.quiz-opt.bad { background:#2a1212; border-color:#4a1f1f; box-shadow:0 0 0 2px rgba(255,86,86,.18) inset; }
+/* Attendance toggle */
+.presentBtn{
+  background:#111820; border:1px solid #22303a; color:#c9d1d9;
+  border-radius:999px; padding:6px 10px; cursor:pointer; font-weight:700;
+}
+.presentBtn.on{
+  background:#0f2a16; border-color:#1b3a23; color:#86f2a8;
+  box-shadow:0 0 0 2px rgba(134,242,168,.14) inset;
+}
+/* Parent view: small panels */
+.panel { background:#0f1317; border:1px solid #1c2228; border-radius:12px; padding:10px; }
+.panel-title { font-weight:800; margin-bottom:6px; }
+.panel-body { white-space:pre-wrap; }
+/* Home chips hover */
+.card .link { color:#8ab4ff; text-decoration:none; }
+.card .link:hover { text-decoration:underline; }
+.card button { transition: transform .06s ease; }
+.card button:active { transform: translateY(1px); }
+/* Segmented control */
+.seg { display:inline-flex; background:#0f1317; border:1px solid #1c2228; border-radius:12px; padding:4px; }
+.seg-btn { background:transparent; border:0; padding:8px 12px; border-radius:8px; color:#c9d1d9; cursor:pointer; }
+.seg-btn.active { background:#12202b; color:#8ab4ff; }
+
+/* Podium tweaks */
+.top3 { display:flex; gap:12px; flex-wrap:wrap; }
+.podium { background:#0f1317; border:1px solid #1c2228; border-radius:14px; padding:12px; min-width:200px; text-align:center; }
+.podium img { border-radius:50%; border:2px solid rgba(255,255,255,.12); }
+.podium .name { font-weight:800; margin-top:6px; }
+.podium .score { color:#9aa6b2; margin-top:2px; }
+/* src/App.css */
+:root {
+  --bg: #0f1216;
+  --card: #171b21;
+  --muted: #a7b0c0;
+  --ring: rgba(255,255,255,.12);
+  --white: #fff;
+  --blue: #38a6ff;
+}
+
+.wrap { padding: 24px 22px; max-width: 980px; margin: 0 auto; }
+
+.card { background: var(--card); border-radius: 16px; padding: 18px; box-shadow: 0 8px 30px rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.06); }
+.row{display:flex;align-items:center;gap:8px}
+.grid{display:grid}
+.list{margin:0;padding-left:18px}
+.muted{color:#a7b0c0}
+.badge,.pill{background:#111820;border:1px solid #22303a;border-radius:999px;padding:2px 8px;font-size:12px}
+.pill-muted{opacity:.8}
+
+.table{display:grid;gap:6px}
+.thead,.trow{display:grid;grid-template-columns: 1.2fr .6fr 1fr .6fr 1fr; gap:8px; align-items:center; background:#0f1317; border:1px solid #1c2228; border-radius:12px; padding:10px}
+.thead{font-weight:800; opacity:.8}
+.cell{display:flex;align-items:center}
+.nameCell{gap:10px}
+.nameCell img{border-radius:50%}
+
+button{background:#0f1317;border:1px solid #1c2228;color:#eaf1f8;border-radius:10px;padding:8px 10px}
+button.danger{background:#2a1212;border-color:#4a1f1f}
+input,select,textarea{background:#0f1317;border:1px solid #1c2228;color:#eaf1f8;border-radius:10px;padding:8px 10px}
+
+/* progress */
+.progress{position:relative;height:10px;background:#0f1317;border:1px solid #1c2228;border-radius:999px;overflow:hidden}
+.progress .bar{height:100%;background:linear-gradient(90deg,#38a6ff,#8ab4ff);box-shadow:0 0 18px rgba(56,166,255,.35) inset;transition:width .25s ease}
+.progress .pct{position:absolute;top:-22px;right:0;font-size:12px;color:#8ab4ff;opacity:.95}
+
+/* segmented control */
+.seg{display:inline-flex;background:#0f1317;border:1px solid #1c2228;border-radius:12px;overflow:hidden}
+.seg-btn{background:transparent;border:0;padding:8px 12px;color:#c9d1d9}
+.seg-btn.active{background:#122231;color:#8ab4ff}
+
+/* attendance */
+.presentBtn{background:#111820;border:1px solid #22303a;color:#c9d1d9;border-radius:999px;padding:6px 10px;font-weight:700}
+.presentBtn.on{background:#0f2a16;border-color:#1b3a23;color:#86f2a8;box-shadow:0 0 0 2px rgba(134,242,168,.14) inset}
+
+/* session pulse */
+.sessionBtn{background:#0f2a16;border:1px solid #1b3a23;color:#86f2a8;border-radius:10px;padding:8px 10px}
+.trow.pulse{animation:rowPulse .35s ease}
+@keyframes rowPulse{from{box-shadow:0 0 0 0 rgba(134,242,168,.35) inset}to{box-shadow:0 0 0 6px rgba(134,242,168,0) inset}}
+
+/* quiz */
+.quiz{margin-top:12px;background:#0f1317;border:1px solid #1c2228;border-radius:12px;padding:12px}
+.quiz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.quiz-opt{background:#111820;border:1px solid #22303a;border-radius:10px;padding:10px;text-align:left}
+.quiz-opt.ok{background:#0f2a16;border-color:#1b3a23;box-shadow:0 0 0 2px rgba(134,242,168,.18) inset}
+.quiz-opt.bad{background:#2a1212;border-color:#4a1f1f;box-shadow:0 0 0 2px rgba(255,86,86,.18) inset}
+
+/* QR */
+.qrRow{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.qrBox{background:#0f1317;border:1px solid #1c2228;border-radius:12px;padding:10px;display:inline-flex;align-items:center;justify-content:center}
+/* ===== THEME: NIGHT (default) vs DAY (blue dark) ================== */
+:root, [data-theme="night"]{
+  --bg:   #0f1216;
+  --card: #171b21;
+  --muted:#a7b0c0;
+  --ring: rgba(255,255,255,.12);
+  --white:#fff;
+  --blue: #38a6ff;
+}
+/* Day = ko'kimtir dark (splash bilan uyg'un) */
+[data-theme="day"]{
+  --bg:   #0b1528;
+  --card: #111c2f;
+  --muted:#a9b7cf;
+  --ring: rgba(255,255,255,.10);
+  --white:#fff;
+  --blue: #5b8cff;
+}
+
+/* Global fonlar */
+body{ background: var(--bg); }
+.app{
+  background:
+    radial-gradient(1200px 600px at 80% 12%, rgba(91,140,255,.10) 0%, rgba(91,140,255,0) 60%),
+    linear-gradient(180deg, var(--bg) 0%, #0a1324 60%, var(--bg) 100%);
+}
+[data-theme="night"] .app{
+  background:
+    radial-gradient(1000px 520px at 78% 22%, rgba(56,166,255,.06) 0%, rgba(56,166,255,0) 60%),
+    linear-gradient(180deg, #0f1216 0%, #12171d 60%, #0f1216 100%);
+}
+
+/* Splash’ni ham tema bilan uyg'unlashtiramiz */
+[data-theme="day"] .splash{
+  background:
+    radial-gradient(1000px 520px at 78% 22%, rgba(92,140,255,.16) 0%, rgba(92,140,255,0) 60%),
+    linear-gradient(180deg, #2d64e3 0%, #0b3fa8 100%) !important;
+}
+[data-theme="night"] .splash{
+  background:
+    radial-gradient(1000px 520px at 78% 22%, rgba(56,166,255,.12) 0%, rgba(56,166,255,0) 60%),
+    linear-gradient(180deg, #0f1216 0%, #12171d 60%, #0f1216 100%) !important;
+}
+.splash::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.20));
+}
+
+/* Chegaralarni ko'k tomonga yaqinlashtirish */
+.card,
+.presentBtn,
+button, input, select, textarea,
+.thead, .trow { border-color: #17263b; }
+/* === NIGHT: legacy dark (oldingi ko‘rinish) ===================== */
+[data-theme="night"]{
+  --bg:   #0f1216;   /* avvalgi fon */
+  --card: #171b21;   /* avvalgi karta */
+  --muted:#a7b0c0;
+  --ring: rgba(255,255,255,.12);
+  --white:#fff;
+  --blue: #38a6ff;   /* avvalgi aksent */
+}
+
+/* Fonni toza qoraga qaytaramiz (splash uslubini bosib ketadi) */
+[data-theme="night"] .app{
+  /* variant 1: mutlaq soddalik */
+  /* background: #0f1114 !important; */
+
+  /* variant 2: juda engil gradient (professional ko‘rinish) */
+  background:
+    linear-gradient(180deg, #0f1216 0%, #0f1114 100%) !important;
+}
+
+/* Chegaralarni ham oldingi kulrangga qaytaramiz */
+[data-theme="night"] .card,
+[data-theme="night"] .thead,
+[data-theme="night"] .trow,
+[data-theme="night"] button,
+[data-theme="night"] input,
+[data-theme="night"] select,
+[data-theme="night"] textarea,
+[data-theme="night"] .presentBtn{
+  border-color: #1c2228 !important;
+}
+/* === TEMP: Day = Night UI (splash o'zgarmaydi) ================== */
+[data-theme="day"]{
+  /* Night bilan aynan bir xil qiymatlar */
+  --bg:   #0f1216;
+  --card: #171b21;
+  --muted:#a7b0c0;
+  --ring: rgba(255,255,255,.12);
+  --white:#fff;
+  --blue: #38a6ff;
+}
+
+/* Kontent foni ham Night’dagi kabi bo'lsin */
+[data-theme="day"] .app{
+  background: linear-gradient(180deg, #0f1216 0%, #0f1114 100%) !important;
+}
+
+/* Chegaralar (kartalar, tugmalar...) Night’dagi kabi */
+[data-theme="day"] .card,
+[data-theme="day"] .thead,
+[data-theme="day"] .trow,
+[data-theme="day"] button,
+[data-theme="day"] input,
+[data-theme="day"] select,
+[data-theme="day"] textarea,
+[data-theme="day"] .presentBtn{
+  border-color: #1c2228 !important;
+}
+/* === Program calendar ========================================== */
+.progCal-grid{
+  display:grid;
+  grid-template-columns: repeat(6, minmax(80px, 1fr));
+  gap:8px;
+}
+.progCal-day{
+  background:#0f1317;
+  border:1px solid #1c2228;
+  border-radius:12px;
+  padding:10px;
+  text-align:center;
+  cursor:pointer;
+  position:relative;
+  transition:transform .06s ease, border-color .12s ease, background .12s;
+}
+.progCal-day:hover{ border-color:#2a3a45; transform: translateY(-1px); }
+.progCal-day .num{ font-weight:800; }
+.progCal-day .tag{
+  position:absolute; top:8px; right:8px;
+  font-size:11px; padding:2px 6px; border-radius:999px;
+  background:#0e2030; border:1px solid #193447; color:#8ab4ff;
+}
+.progCal-day.done{
+  background:#0f2a16;
+  border-color:#1b3a23;
+  color:#86f2a8;
+  box-shadow:0 0 0 2px rgba(134,242,168,.14) inset;
+}
+.progCal-day.today{ outline: 2px solid rgba(56,166,255,.45); }
+@media (max-width: 640px){
+  .progCal-grid{ grid-template-columns: repeat(4, minmax(64px,1fr)); }
+}
+/* ===== Group polish ==================================== */
+.g-sticky{
+  position: sticky; top: 0; z-index: 5;
+  background: linear-gradient(180deg, rgba(15,18,22,.92), rgba(15,18,22,.75) 60%, transparent);
+  backdrop-filter: blur(2px);
+  padding: 8px 0 6px;
+  margin: -8px 0 6px;
+}
+.g-title{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+.g-chips{ display:flex; gap:8px; flex-wrap:wrap; }
+.g-actions{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:6px; }
+
+.collapseBtn{
+  background:#0f1317; border:1px solid #1c2228; color:#eaf1f8;
+  border-radius:10px; padding:6px 10px; font-weight:700;
+}
+
+/* Medal overlay on avatars */
+.avatarWrap{ position:relative; display:inline-flex; }
+.avatarWrap img{ display:block; border-radius:50%; }
+.medal{
+  position:absolute; right:-6px; bottom:-6px;
+  font-size:16px; line-height:1; border-radius:50%;
+  filter: drop-shadow(0 0 6px rgba(0,0,0,.45));
+}
+.medal.gold   { filter: drop-shadow(0 0 8px rgba(255,215,0,.35)); }
+.medal.silver { filter: drop-shadow(0 0 8px rgba(192,192,192,.35)); }
+.medal.bronze { filter: drop-shadow(0 0 8px rgba(205,127,50,.35)); }
+/* === Vocab 2.0 add-ons ================================== */
+.btn-like{ background:#0f1317; border:1px solid #1c2228; border-radius:10px; padding:8px 10px; cursor:pointer; }
+.btn-like:hover{ border-color:#223442; }
+
+.quiz-top{ display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+.quiz-q{ font-weight:800; font-size:20px; margin:6px 0 12px; display:flex; align-items:center; gap:8px; }
+.tts{ background:#0f1317; border:1px solid #1c2228; border-radius:8px; padding:4px 6px; cursor:pointer; }
+.opt-tts{ background:transparent; border:0; margin-left:8px; cursor:pointer; color:#c9d1d9; }
+.typing-wrap{ display:flex; gap:8px; align-items:center; }
+.typing-input{ flex:1; }
+
+.quiz-opt{ position:relative; display:flex; justify-content:space-between; align-items:center; }
+.quiz-opt .opt-tts{ opacity:.75; }
+.quiz-opt.ok { background:#0f2a16; border-color:#1b3a23; box-shadow:0 0 0 2px rgba(134,242,168,.18) inset; }
+.quiz-opt.bad{ background:#2a1212; border-color:#4a1f1f; box-shadow:0 0 0 2px rgba(255,86,86,.18) inset; }
+/* === FX: confetti / emoji burst ========================= */
+.fx-root{
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+}
+.fx-particle{
+  position: absolute; left: 50%; top: 38%;
+  transform: translate(-50%, -50%) scale(.9);
+  animation: fx-pop var(--dur,1.1s) cubic-bezier(.18,.8,.2,1) forwards;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
+  font-size: var(--fs,20px);
+}
+@keyframes fx-pop{
+  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.6) rotate(0); }
+  12%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(var(--rot)); }
+}
+
+/* biroz jonlanish: cards hover */
+.card{ transition: box-shadow .18s ease, transform .12s ease; }
+.card:hover{ transform: translateY(-1px); box-shadow: 0 12px 36px rgba(0,0,0,.45); }
+/* === Student card (avatar) =============================== */
+.studentCard{
+  display:flex; gap:12px; align-items:center; justify-content:space-between;
+  background:#0f1317; border:1px solid #1c2228; border-radius:14px; padding:10px;
+}
+.studentCard-av{
+  width:56px; height:56px; border-radius:50%;
+  border:3px solid rgba(255,255,255,.12);
+  box-shadow:0 2px 10px rgba(0,0,0,.35);
+  object-fit:cover; background:#111;
+  animation: popIn .35s ease;
+}
+.studentCard-meta{ flex:1; }
+.studentCard-name{ font-weight:800; font-size:18px; }
+
+/* === Flashcards (flip) =================================== */
+.flash-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; }
+.flip{ perspective:900px; }
+.flip-inner{
+  position:relative; height:110px;
+  transform-style:preserve-3d; transition: transform .4s ease;
+}
+.flip.show .flip-inner{ transform: rotateY(180deg); }
+.flip-face{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background:#0f1317; border:1px solid #1c2228; border-radius:12px; padding:10px; font-weight:700;
+  backface-visibility:hidden;
+}
+.flip-back{ transform: rotateY(180deg); }
+.tts.small{ padding:4px 6px; border-radius:8px; margin-right:6px; }
+
+/* Micro anims */
+@keyframes popIn{ from{transform:scale(.85); opacity:0} to{transform:scale(1); opacity:1} }
+/* === Avatar sharpness / retina override ================== */
+.studentCard-av{
+  width:64px; height:64px;             /* biroz yirik, lekin originaldan oshirmang */
+  border-radius:50%;
+  border:3px solid rgba(255,255,255,.12);
+  background:#111;
+  object-fit: cover;
+  /* ko'rinishni aniqroq qilish uchun */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
