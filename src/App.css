@@ -641,7 +641,7 @@ img[src$="36-3d.png"]{
   --star-x:        5.02; /* yulduzni logoning o'ng tomoniga olib boradi */
   --star-up:       clamp(8px, 1.6vw, 18px);
 
-  --art-w:         clamp(340px, 66vw, 650px);
+  --art-w:         clamp(640px, 66vw, 650px);
   --art-right:     max(-24px, -4vw);
   --art-bottom:    max(-28px, -4vw);
 }
