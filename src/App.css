@@ -555,3 +555,79 @@ img[src$="36-3d.png"] {
     bottom: -14vw;
   }
 }
+/* ====== GLOBAL HERO LAYOUT (PNG-only) ====== */
+body{
+  /* --- sozlanadigan parametrlar --- */
+  --hero-pad-top:  clamp(22px, 6vw, 56px);   /* logo tepadan */
+  --hero-pad-left: clamp(16px, 6vw, 40px);   /* logo chapdan */
+  --logo-w:        clamp(200px, 58vw, 520px);/* the36-text.png eni */
+
+  --star-w:        clamp(18px, 4.6vw, 30px); /* star.png eni */
+  --star-x:        0.74;   /* yulduzning logo eni bo'yicha gorizontal nisbati (0..1) */
+  --star-up:       clamp(4px, 1.4vw, 14px);  /* yulduzni yuqoriga surish */
+
+  --art-w:         clamp(240px, 55vw, 540px);/* 36-3d.png eni */
+  --art-right:     max(-56px, -10vw);        /* o'ng chekka offset */
+  --art-bottom:    max(-84px, -12vw);        /* past chekka offset */
+
+  background: radial-gradient(120% 80% at 20% 10%, #17202a 0%, #0f1114 60%);
+  min-height: 100svh;
+  margin: 0;
+  color:#e9eef3;
+  position: relative;     /* absolut joylashish uchun konteyner */
+  overflow: hidden;
+  font-family: system-ui, Arial, sans-serif;
+}
+
+/* rasm/vidyolar moslashsin */
+img, video, canvas, svg { max-width:100%; height:auto; display:block; }
+
+/* ====== LOGO MATN (the36-text.png) – aniq joylashuv ====== */
+img[src$="/the36-text.png"],
+img[src$="the36-text.png"]{
+  position: absolute;
+  top:  var(--hero-pad-top);
+  left: var(--hero-pad-left);
+  width: var(--logo-w);
+  z-index: 2;
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,.08));
+}
+
+/* ====== YULDUZ (star.png) – logoning ustida aniq nuqtaga ====== */
+img[src$="/star.png"],
+img[src$="star.png"]{
+  position: absolute;
+  /* yulduzni logoning ichki koordinatasiga nisbatan qo'yamiz */
+  top:  calc(var(--hero-pad-top) - var(--star-up));
+  left: calc(var(--hero-pad-left) + var(--logo-w) * var(--star-x));
+  width: var(--star-w);
+  height: auto;
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ====== PASTDAGI 3D RAQAM (36-3d.png) ====== */
+img[src$="/36-3d.png"],
+img[src$="36-3d.png"]{
+  position: absolute;
+  right: var(--art-right);
+  bottom: var(--art-bottom);
+  width: var(--art-w);
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 24px 40px rgba(0,0,0,.35));
+}
+
+/* ====== Mayda ekranlarda nozik tuzatishlar ====== */
+@media (max-width: 480px){
+  body{
+    --hero-pad-top:  18px;
+    --hero-pad-left: 16px;
+    --star-x: .70;          /* yulduzni sal chaproqqa */
+    --art-right: -12vw;
+    --art-bottom: -14vw;
+  }
+}
