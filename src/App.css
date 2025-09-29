@@ -698,3 +698,51 @@ img[src$="36-3d.png"]{
     --art-bottom:    -6vw;
   }
 }
+/* === [TWEAK] Splash joylashuv tuzatish === */
+:root{
+  --hero-pad-top:  clamp(42px, 9vw, 78px);   /* logoni biroz pastroqqa */
+  --star-x:        0.78;                     /* yulduzni logoning ustiga yaqinroq */
+  --star-up:       clamp(-2px, 0.6vw, 6px);  /* yulduzni pastroqqa tushirish */
+
+  --art-w:         clamp(420px, 80vw, 720px);/* 36-3d kattaroq */
+  --art-right:     max(-10px, -2vw);         /* o‘ngga yaqinroq */
+  --art-bottom:    max(-12px, -2vw);         /* yuqoriroq chiqsin */
+}
+
+@media (max-width: 480px){
+  :root{
+    --hero-pad-top:  32px;   /* mobil ekranda logoni sal pastroqqa */
+    --star-x:        0.76;
+    --art-right:     -4vw;
+    --art-bottom:    -4vw;
+  }
+}
+/* === [HOT FIX] 36-3d ko'rinmay qolsa — majburiy override === */
+.splash .splash-num{
+  position: absolute !important;
+  right: -4vw !important;
+  bottom: -4vw !important;
+  width: clamp(360px, 72vw, 760px) !important;
+  height: auto !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  display: block !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 18px 48px rgba(0,0,0,.25)) !important;
+}
+
+/* Yulduz va logo holatini saqlaymiz */
+.splash .splash-headline{
+  position: absolute !important;
+  top:  clamp(36px, 7vw, 72px) !important;
+  left: clamp(24px, 7vw, 56px) !important;
+  width: clamp(230px, 60vw, 560px) !important;
+}
+.splash .spark{
+  position: absolute !important;
+  top:  calc(clamp(36px, 7vw, 72px) - clamp(8px, 1.6vw, 18px)) !important;
+  left: calc(clamp(24px, 7vw, 56px) + clamp(230px, 60vw, 560px) * 0.98) !important;
+  width: clamp(22px, 5vw, 36px) !important;
+  height: clamp(22px, 5vw, 36px) !important;
+}
