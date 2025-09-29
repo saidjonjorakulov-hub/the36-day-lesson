@@ -631,3 +631,70 @@ img[src$="36-3d.png"]{
     --art-bottom: -14vw;
   }
 }
+/* === [OVERRIDE] SPLASH joylashuvi — kitob muqovasiga yaqin === */
+:root{
+  --hero-pad-top:  clamp(36px, 7vw, 72px);
+  --hero-pad-left: clamp(24px, 7vw, 56px);
+  --logo-w:        clamp(230px, 60vw, 560px);
+
+  --star-w:        clamp(22px, 5vw, 36px);
+  --star-x:        1.02; /* yulduzni logoning o'ng tomoniga olib boradi */
+  --star-up:       clamp(8px, 1.6vw, 18px);
+
+  --art-w:         clamp(340px, 66vw, 650px);
+  --art-right:     max(-24px, -4vw);
+  --art-bottom:    max(-28px, -4vw);
+}
+
+/* Splash konteyneri — fon */
+.splash{
+  position: fixed; inset: 0; z-index: 10;
+  overflow: hidden; isolation: isolate;
+  background:
+    radial-gradient(120% 80% at 20% 10%, #17305a 0%, rgba(23,48,90,0) 55%),
+    linear-gradient(180deg, #2d64e3 0%, #0b3fa8 100%);
+}
+
+/* Logo (the36-text.png) — chap/yuqori */
+.splash .splash-headline{
+  position: absolute !important;
+  top:  var(--hero-pad-top);
+  left: var(--hero-pad-left);
+  width: var(--logo-w);
+  height: auto;
+  filter: drop-shadow(0 10px 28px rgba(0,0,0,.22));
+}
+
+/* Yulduz (App.jsx ichidagi .spark SVG) — logoga nisbatan */
+.splash .spark{
+  position: absolute !important;
+  top:  calc(var(--hero-pad-top) - var(--star-up));
+  left: calc(var(--hero-pad-left) + var(--logo-w) * var(--star-x));
+  width: var(--star-w);
+  height: var(--star-w);
+  fill: #fff;
+  filter: drop-shadow(0 6px 18px rgba(255,255,255,.38));
+}
+
+/* Pastdagi 3D “36” (36-3d.png) — ko'proq ko'rinsin */
+.splash .splash-num{
+  position: absolute !important;
+  right: var(--art-right);
+  bottom: var(--art-bottom);
+  width: var(--art-w);
+  height: auto;
+  filter: drop-shadow(0 18px 48px rgba(0,0,0,.25));
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Kichik ekranlarda yaqinlashtirish */
+@media (max-width: 480px){
+  :root{
+    --hero-pad-top:  24px;
+    --hero-pad-left: 18px;
+    --star-x:        1.00;
+    --art-right:     -6vw;
+    --art-bottom:    -6vw;
+  }
+}
