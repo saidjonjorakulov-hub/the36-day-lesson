@@ -580,7 +580,7 @@ button, input, select, textarea,
 @media (max-width: 480px){
   :root{
     --hero-pad-top:  32px;
-    --star-x:        .80;
+    --star-x:        .200000;
     --art-right:     -4vw;
     --art-bottom:    -4vw;
   }
@@ -591,4 +591,52 @@ button, input, select, textarea,
   .splash .splash-headline,
   .splash .splash-num,
   .splash .spark{ animation: none !important; }
+}
+/* ==== QUICK OVERRIDE (debug) — hammasini majburan yangilash ==== */
+:root{
+  --hero-pad-top: 32px !important;
+  --hero-pad-left: 18px !important;
+  --logo-w: clamp(230px,60vw,560px) !important;
+
+  --star-x: .80 !important;     /* yulduz o‘ng-chap */
+  --star-up: 60x !important;   /* yulduz yuqori-past */
+
+  --art-w: clamp(520px,85vw,780px) !important; /* 36 3D kattaroq */
+  --art-right: -4vw !important;
+  --art-bottom: -4vw !important;
+}
+
+/* Bu ham albatta o‘qilsin (eski qoidalarni majburan bekor qiladi) */
+.splash .spark{
+  left: calc(var(--hero-pad-left) + var(--logo-w) * var(--star-x)) !important;
+  top:  calc(var(--hero-pad-top) - var(--star-up)) !important;
+}
+.splash .splash-num{
+  right: var(--art-right) !important;
+  bottom: var(--art-bottom) !important;
+  width: var(--art-w) !important;
+}
+/* === FINAL OVERRIDE (App.css oxirida) ================== */
+:root{
+  --hero-pad-top: 32px !important;
+  --hero-pad-left: 18px !important;
+  --logo-w: clamp(230px,60vw,560px) !important;
+
+  --star-x: .80 !important;   /* yulduzning gorizontal pozitsiyasi (0..1+) */
+  --star-up: 10px !important; /* yulduzni qanchaga tepaga/pastga surish */
+
+  --art-w: clamp(520px,85vw,780px) !important;  /* 3D 36 kattalik */
+  --art-right: -4vw !important;
+  --art-bottom: -4vw !important;
+}
+
+.splash .spark{
+  left: calc(var(--hero-pad-left) + var(--logo-w) * var(--star-x)) !important;
+  top:  calc(var(--hero-pad-top) - var(--star-up)) !important;
+}
+
+.splash .splash-num{
+  right: var(--art-right) !important;
+  bottom: var(--art-bottom) !important;
+  width: var(--art-w) !important;
 }
